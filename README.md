@@ -1,6 +1,6 @@
-![Sir Perceval](http://perseval.xyz/img/perceval.gif)
+![Sir Perceval](img/perceval.gif)
 
-##Persistent Evaluation Versioning 2.0.0.0
+##Persistent Evaluation Versioning 2.0.0.1
 
 Perseval version numbers are constructed using the following format:
 
