@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta content="text/html; charset=us-ascii" http-equiv="content-type">
+
+    <title>Perseval: Persistent Evaluation Versioning</title>
+    <link href="https://fonts.googleapis.com/css?family=Karma:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet" type="text/css">
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                                    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-82177205-1', 'auto');
+            ga('send', 'pageview');
+
+    </script>
+</head>
+
+<body>
+    <div class="center">
+        <div class="title">
+            <img src="img/perceval.gif">
+
+            <p><span class="subtitle">Perseval</span><br>
+            <span class="version">Persistent Evaluation Versioning 2.0.0.0</span></p>
+        </div>
+
+        <h1>At-a-Glance</h1>
+
+        <table class="spacer">
+            <tbody>
+                <tr>
+                    <td colspan="1" rowspan="1"><span class="bold">FOUNDATION</span></td>
+
+                    <td colspan="1" rowspan="1"><span class="bold">PHASE</span></td>
+
+                    <td colspan="1" rowspan="1"><span class="bold">FEATURE</span></td>
+
+                    <td colspan="1" rowspan="1"><span class="bold">FIX</span></td>
+                </tr>
+
+                <tr>
+                    <td colspan="1" rowspan="1">Increment when the project changes for users on a fundamental level</td>
+
+                    <td colspan="1" rowspan="1">Increment when work begins on a planned or apparent set of features or fixes</td>
+
+                    <td colspan="1" rowspan="1">Increment when you make additions or upgrades within the context of the current phase</td>
+
+                    <td colspan="1" rowspan="1">Increment upon repairing features that are known or discovered to be faulty</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h1>Introduction</h1>
+
+        <p>Versioning is a long-standing way for individuals or teams to evaluate and track the trajectory of a creative endeavor by providing specific rules for constructing an abstract and
+        consistent code that indicates the nature of changes made over time. Versioning also implicitly acts as a designator of quality. It is assumed that within any project, the objective is to
+        improve incrementally on what came before with each subsequent version being borne of that purpose.</p>
+
+        <p>A version number contains a host of information that communicates current status as well as offering a sense of the historical record of the project as a whole. It also serves as a
+        convenient device for planning ahead. Additionally, a version number facilitates strategic discussion with outside parties by offering a frame of reference. At the very least, versioning
+        provides developers an internal guide to help measure progress.</p>
+
+        <p>The use of versioning is perhaps most prevalent in the software development community. Versioning releases is a crucial aspect in the development process of software as well as having a
+        role in how it is marketed and released to its target audience. From this release-centric cycle of software development has come numerous specifications for assigning version numbers. Some
+        are publicly available and enjoy large adoption rates, like <a href="http://semver.org/">Semantic Versioning</a> (SemVer). Others are homespun or proprietary and designed to work within a
+        particular situation.</p>
+
+        <p><span class="bold">Persistent Evaluation Versioning (Perseval)</span> is yet another versioning specification built on and adapted from many ideas, concerns, and debates raised throughout
+        the history of versioning. The primary reason for creating the Perseval specification is to establish a flexible system that easily fits ongoing projects of a <span class="bold">continuously
+        deployed</span> or <span class="bold">regularly updated</span> nature, such as websites.</p>
+
+        <p>Using the common MAJOR.MINOR.PATCH system of versioning in the context of a continuously deployed project causes a bit of a disconnect, especially where language referring to breakage and
+        backward-compatibility are concerned. These factors, of course, are essential considerations when it comes to self-contained, or package-dependent software releases. In the case of a website,
+        users do not typically have much choice about which version they use; companies tend to only serve the latest and greatest version or do partial rollouts in order to test features.
+        Additionally, website versions, while still being measured in terms of upgrades, revisions, and patches, may not deploy all of these features at once, but rather in a piecemeal fashion as
+        they become available. In this respect, the MAJOR.MINOR.PATCH method of version begins to feel like a bit of a forced fit. Most assuredly, it can work, but using a specification focused
+        specifically on the problems of continuous deployment should prove useful for accurate, easy versioning of websites and other projects of a similar nature.</p>
+
+        <h1>Goals</h1>
+
+        <p>To best determine if Perseval is suited to a particular application, it is useful to layout the goals and aspirations meant to be achieved in the development of this specification.</p>
+
+        <ol start="1">
+            <li><span class="bold">Inclusive</span> &nbsp;- Perseval can accommodate a wide range of continuously deployed projects ranging from those made by an individual developing a
+            personal web page live on the server to that of a large team working under the auspices of version control software. Perseval assumes all projects are equally important in the eyes of
+            their creators.</li>
+
+            <li><span class="bold">Flexible</span> &nbsp;- No two development scenarios have exactly the same needs. One idea behind Perseval is to provide balanced language that is broad enough
+            allow simple adoption without having to make uncomfortable concessions or resort to arcane interpretations of the specification to fit a project.</li>
+
+            <li><span class="bold">Enforceable</span> &nbsp;- On the other side of that balance, it is important that the language of the specification be narrow and terse enough to ensure a clear
+            sense of what a particular version represents.</li>
+
+            <li><span class="bold">Compatible</span> &nbsp;- Rolling over into Perseval from another versioning system should, within reason, be fairly straightforward. For example, switching over on
+            a MINOR update from SemVer would be relatively seamless and would not overtly impact prior planning for the future of the project.</li>
+        </ol>
+
+        <h1>Specification Summary</h1>
+
+        <p>Perseval version numbers are constructed using the following format:<br>
+        FOUNDATION.PHASE.FEATURE.FIX</p>
+
+        <ol start="1">
+            <li>Increment the FOUNDATION member when the project changes on a fundamental level.</li>
+
+            <li>Increment the PHASE member when you begin working on a planned or apparent set of features or upgrades.</li>
+
+            <li>Increment the FEATURE member when you publish additions or upgrades within the context of the current phase.</li>
+
+            <li>Increment the FIX member when you publish repairs on features that are known or discovered to be faulty.</li>
+
+            <li>Additional optional members may be added to indicate the project&rsquo;s disposition, status, or other non-instrumental information.</li>
+        </ol>
+
+        <h1>Specification</h1>
+
+        <ol class="spec" start="1">
+            <li>The version number, that being constructed in a <span class="bold">FOUNDATION.PHASE.FEATURE.FIX</span> format, is represented symbolically as <span class="bold italic">a.b.c.d</span>,
+            respectively. Additional, optional members may be added in similar fashion, using the next consecutive letter in the Latin alphabet. For example, <span class="italic">a.b.c.d.e</span>,
+            and so on.</li>
+
+            <li>Version numbers, specifically, the <span class="bold italic">first four members</span> <span class="bold">&nbsp;(</span> <span class="bold italic">a.b.c.d</span> <span class=
+            "bold">)</span> &nbsp;must contain only non-negative integers without leading-zeros separated by dot ( . ) characters. All members must contain a value.</li>
+
+            <li>Version numbers must only be <span class="bold italic">incremented in a forward fashion</span>. In other words, version numbers can not go backwards, even if an aspect of the
+            development is rolled back.</li>
+
+            <li>All newly deployed content, <span class="bold italic">immediately upon reaching its audience</span> must increment the version according to the specification.</li>
+
+            <li>The current version number of the project should be <span class="bold italic">rigorously maintained</span> in a location easily accessible and viewable to all interested parties, with
+            incrementation happening in a nearly real-time fashion.</li>
+
+            <li>Incrementing FOUNDATION ( <span class="italic">a</span> ) <span class="bold italic">automatically and irreversibly</span> &nbsp;resets all subsequent members ( <span class=
+            "italic">b.c.d</span> ) to zero. It is assumed that any fundamental change resulting in the incrementation of FOUNDATION carries with it a fresh PHASE. Likewise, incrementing PHASE (
+            <span class="italic">b</span> ) automatically and irreversibly resets its constituent members ( <span class="italic">c</span> &nbsp;&amp; <span class="italic">d</span> ) to zero.
+            Incrementing FEATURE ( <span class="italic">c</span> ) and FIX ( <span class="italic">d</span> ) <span class="bold italic">do not</span> &nbsp;cause a reset of any member as they are a
+            descriptive extension of PHASE ( <span class="italic">b</span> ).</li>
+
+            <li>Incrementation of PHASE ( <span class="italic">b</span> ) can be caused by completing all planned features and fixes within the given version, reaching the end (or beginning) of a
+            pre-determined timeline, or by determining that the features and fixes implemented, by their nature or quantity, surely must have moved the project across the threshold into a new PHASE.
+            Developers, creators, and teams have the discretion to determine the proper PHASE threshold for the project at-hand.</li>
+
+            <li>The FEATURE ( <span class="italic">c</span> ) member typically constitutes an addition, upgrade, or enhancement, which does not <span class="bold italic">specifically and
+            solely</span> &nbsp;attempt repair a fault in the project. A feature, however, may <span class="bold italic">include</span> &nbsp;such repairs, given they are within the scope of the
+            feature. Additionally, transparent refactoring of code is considered an upgrade, not a repair and, as such, increments FEATURE ( <span class="italic">c</span> ).</li>
+
+            <li>The FIX ( <span class="italic">d</span> ) member constitutes the repair or patch of a known or discovered fault in the project. The scope of a fix should be limited to only this
+            repair and should not add any additional functionality unnecessary to fixing the broken element. If additional, non-essential functionality is introduced, the FEATURE ( <span class=
+            "italic">c</span> ) member should be incremented instead.</li>
+
+            <li>Features and fixes of similar ilk may be clustered together provided the <span class="bold italic">scope is contained</span> . For example, updating a logo in several places on a
+            website may be considered one feature and result in a single incrementation</li>
+
+            <li>If any non-faulty feature is removed from the front-facing body of the project, FEATURE ( <span class="italic">c</span> ) must be incremented, even if it was the most recent feature
+            added. Version numbers are not only in place to indicate current status but also to create an <span class="bold italic">historical record</span> &nbsp;for the project.</li>
+
+            <li>Versioning is prioritized in a front-to-back manner. That is, incrementation is <span class="bold italic">weighted in favor of user experience</span> . For example, a far-reaching or
+            incompatible change in the user interface or pre-exisiting functionality would likely result in the incrementation of FOUNDATION ( <span class="italic">a</span> ) however, a structural
+            overhaul of an underlying database does not necessarily constitute a foundational change, assuming the user experience was not altered considerably.</li>
+
+            <li>Scope is funneled from broad to narrow through the course of FOUNDATION.PHASE.FEATURE.FIX, respectively. FOUNDATION ( <span class="italic">a</span> ) is broad in scope and loosely
+            coupled to PHASE ( <span class="italic">b</span> ), whereas FEATURE ( <span class="italic">c</span> ) and FIX ( <span class="italic">d</span> ) are narrow in scope and are tightly coupled
+            to PHASE ( <span class="italic">b</span> ). This relationship ensures that high-level strategic discussion can occur in tandem with persistent development.</li>
+
+            <li>The version number is read <span class="bold italic">left to right</span> &nbsp;with the current version being that with the <span class="bold italic">highest, left-most number</span>
+            &nbsp;within its first four members ( <span class="italic">a.b.c.d</span> ). For example, version 2.3.10.2 is greater than 2.3.9.2. Optional members do not necessarily influence
+            precedence.</li>
+
+            <li>Optional member extensions, those beyond members <span class="italic">a.b.c.d</span> , may be added as descriptors of the version to which they are attached. This may include
+            information such as build number, pipeline status, date (as in <a class="c12" href="http://calver.org/">calendar versioning</a> ), or other information relevant to the version it
+            describes. Member extensions may include alphanumeric characters as well as hyphens ( - ) and underscores ( _ ).</li>
+
+            <li>The initial version of a project should be the first version that <span class="bold italic">reaches its intended audience</span> . As such, projects with an existing legacy may opt to
+            retroactively include that history by incrementing FOUNDATION ( <span class="italic">a</span> ) or PHASE ( <span class="italic">b</span> ) accordingly. Otherwise, versions are
+            <span class="bold italic">relative to the adoption</span> &nbsp;of the versioning scheme.</li>
+
+            <li>Initial development versions may use zero as FOUNDATION ( <span class="italic">a</span> ). For example, version 0.1.4.0 indicates that the project is within phase one of its inital
+            development, having added four features, thus far.</li>
+
+            <li>If any version, beginning with the initial version of a project, introduces code resources or packages intended to be reused or distributed outside the context of the project, these
+            elements must be <span class="bold italic">comprehensively documented</span> &nbsp;such that users can understand the potential benefits and ramifications of implementing these
+            resources.</li>
+
+            <li>The version number itself is a simple indicator. <span class="bold italic">Detailed changelogs should be maintained</span> &nbsp;by developers for clarity and posterity.</li>
+        </ol>
+
+        <h1>Practical Questions and Answers</h1>
+
+        <p><span class="bold">Q: I just added a feature and incremented the version accordingly. I quickly realized that I didn&rsquo;t want the feature anymore and removed it. How does this affect
+        the version?</span></p>
+
+        <p>A: If the feature was faulty and removed as a result, then FIX should be incremented, since removing it was tantamount to a solution. If, however, the feature was not faulty, but just not
+        wanted (or maybe ahead of its time), then increment FEATURE, as it ultimately communicates that the feature set changed.</p>
+
+        <p><span class="bold">Q: Is there a limit to how many phases can occur before the foundation changes?</span></p>
+
+        <p>A: No, there is no set limit within the specification. That said, you can certainly set a limit within the context of your project, whether it be seasonally, monthly, fiscally, or
+        otherwise. Perseval is designed specifically to work with planned phases and anticipated timelines.</p>
+
+        <p><span class="bold">Q: Doesn&rsquo;t this system remove the incentive of going to version 2.0? Why not just keep adding features and fixes to the initial version? Is it okay to have a
+        version like 1.0.985.230?</span></p>
+
+        <p>A: This is a good question raised by many people using various versioning schemes. The truth is that the incentive to reach 2.0.0.0 is not really bound to any versioning scheme. The first
+        step is to determine your project&rsquo;s objectives. If you really want to get to 2.0.0.0, set the conditions or threshold needed to make that happen. Your versioning scheme will help you
+        realize those goals through progress tracking. That said, yes, it is okay to use Perseval in a way that produces the version number mentioned. It is still a clear indicator of the work that
+        went into the project.</p>
+
+        <p><span class="bold">Q: How do I know when I have entered a new phase or foundation?</span></p>
+
+        <p>A: You or your team should discuss these matters (at length) to determine milestones and objectives for each phase. That said, sometimes in the hustle and bustle, it can be easy to just
+        keep forging ahead, outside the guardrails of advance planning. That is when this question takes a bit of a philosophical turn. To avoid falling into the <span href=
+        "https://en.wikipedia.org/wiki/Ship_of_Theseus">Ship of Theseus</a></span> &nbsp;paradox, try to make the time to evaluate what you&rsquo;ve accomplished and look for natural seams in your
+        workload or project goals to help determine thresholds.</p>
+
+        <p><span class="bold">Q: My team utilizes a separate quality assurance department before releasing updates into the wild. At what point do I increment?</span></p>
+
+        <p>A: In this situation, incrementation should happen at the point the updates are released to the public. The moment those changes are available to users, the version should be incremented.
+        Also note, it is especially important when working on a team to have an easily accessbible place to log the project's current version. Developers working independently of each other may not
+        otherwise know what version they are incrementing from.</p>
+
+        <p><span class="bold">Q: Can I use Perseval with projects having nothing to do with websites or continuous deployment?</span></p>
+
+        <p>A: You sure can! You can use this versioning scheme on any number of projects that are rolled out incrementally and/or in phases. Bear in mind, however, that there are many versioning
+        schemes out there and finding one that fits well with your project will make things much easier in the long run.</p>
+
+        <h1>Author</h1>
+
+        <p>Kristofer Lee</p>
+
+        <h1>Licenses</h1>
+
+        <p>Persistent Evaluation Versioning (Perseval) - <a href="https://creativecommons.org/licenses/by/3.0/">Creative Commons - CC BY 3.0</a></p>
+
+        <p>Image of <a href="http://www.gutenberg.org/files/10745/10745-h/10745-h.htm#percival">Sir Perceval</a> - <a href=
+        "https://www.gutenberg.org/wiki/Gutenberg:The_Project_Gutenberg_License">ProjectGutenberg</a></p>
+    </div>
+</body>
+</html>
